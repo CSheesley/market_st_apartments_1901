@@ -10,12 +10,9 @@ class Building
   end
 
   def average_rent
-    all_rents = []
-    @units.select do |unit|
-    all_rents << unit.monthly_rent.to_f
+    @units.sum do |unit|
+      unit.monthly_rent.to_f / @units.count
     end
-
-    all_rents.sum / all_rents.count
   end
 
   def renter_with_highest_rent
@@ -27,7 +24,7 @@ class Building
 
   def occupied_units
     @units.reject do |unit|
-      unit.renter == nil
+      unit.renter.nil?
     end
   end
 
@@ -39,19 +36,15 @@ class Building
   end
 
   def all_renters
-    all_renters = []
     all_renters = occupied_units.map do |unit|
       unit.renter.name
     end
-    all_renters
   end
 
   def all_annual_rents
-    all_annual_rents = []
     all_annual_rents = occupied_units.map do |unit|
       unit.monthly_rent * 12
     end
-    all_annual_rents
   end
 
 end
