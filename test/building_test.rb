@@ -35,7 +35,7 @@ class BuildingTest < Minitest::Test
   def test_it_can_show_the_average_rent_for_the_building
     @building.add_unit(@a1)
     @building.add_unit(@b2)
-    
+
     assert_equal 1099.5, @building.average_rent
   end
 
