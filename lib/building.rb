@@ -28,12 +28,18 @@ class Building
     end
   end
 
-# surely a better way to get this result where names are tied to the rent that
-# they pay. Right now it happens to match up this way, but if arrays were
-# sorted, this would break.
   def annual_breakdown
-    annual_breakdown = Hash[all_renters.zip(all_annual_rents)]
+    #hash output. Key - name, Value - monthly_rent * 12
+    occupied_units.inject({}) do |breakdown, unit|
+      breakdown[unit.renter.name] = unit.monthly_rent * 12
+      breakdown
+    end
   end
+
+# * original method - worked, but renter not tied to thier rent
+  # def annual_breakdown
+  #   annual_breakdown = Hash[all_renters.zip(all_annual_rents)]
+  # end
 
   def all_renters
     all_renters = occupied_units.map do |unit|
